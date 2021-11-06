@@ -1,6 +1,6 @@
+import path from 'path';
 import { Configuration } from 'webpack';
 import { ConfigContextType } from '../context';
-import { resolvePaths } from '../utils/paths';
 import { resolveAlias } from '../utils/resolveAlias';
 import { getCssRules } from './get-css-rules';
 import { getWebpackPlugins } from './get-webpack-plugins';
@@ -10,23 +10,21 @@ const hasJsxRuntime = true;
 const shouldUseReactRefresh = true;
 
 const getCommonConfiguration = (ctx: ConfigContextType): Configuration => {
-  const { entry, env = 'development' } = ctx;
+  const { env = 'development', paths } = ctx;
   const isEnvProduction = env === 'production';
   const isEnvDevelopment = env === 'development';
   const shouldUseSourceMap = env === 'development';
-
-  const paths = resolvePaths();
   return {
-    entry,
+    entry: [paths.appEntry],
+    mode: env === 'production' ? 'production' : 'development',
     resolve: {
+      extensions: ['.js', '.ts', '.tsx', 'jsx', '.json'],
       alias: resolveAlias(paths.appSrc),
     },
     output: {
       path: isEnvProduction ? paths.appBuild : undefined,
       // Add /* filename */ comments to generated require()s in the output.
       pathinfo: isEnvDevelopment,
-      // There will be one main bundle, and one file per asynchronous chunk.
-      // In development, it does not produce real files.
       filename: isEnvProduction
         ? 'static/js/[name].[contenthash:8].js'
         : 'static/js/bundle.js',
@@ -114,7 +112,11 @@ const getCommonConfiguration = (ctx: ConfigContextType): Configuration => {
             ...getCssRules(ctx),
             {
               loader: require.resolve('file-loader'),
-              exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
+              exclude: [
+                /\.(js|mjs|jsx|ts|tsx|css|less|scss|sass)$/,
+                /\.html$/,
+                /\.json$/,
+              ],
               options: {
                 name: 'static/media/[name].[hash:8].[ext]',
               },

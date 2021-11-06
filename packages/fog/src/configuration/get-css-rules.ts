@@ -5,7 +5,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { ConfigContextType } from '../context';
 
 export function getCssRules(ctx: ConfigContextType): RuleSetRule[] {
-  const { env, paths } = ctx;
+  const { env } = ctx;
   const isEnvDevelopment = env === 'development';
   const isEnvProduction = env === 'production';
   const shouldUseSourceMap = env === 'development';
@@ -28,36 +28,39 @@ export function getCssRules(ctx: ConfigContextType): RuleSetRule[] {
       {
         loader: require.resolve('postcss-loader'),
         options: {
-          ident: 'postcss',
-          plugins: () => [
-            require('postcss-flexbugs-fixes'),
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
-            require('postcss-preset-env')({
-              autoprefixer: {
-                flexbox: 'no-2009',
-              },
-              stage: 3,
-            }),
-            // Adds PostCSS Normalize as the reset css with default options,
-            // so that it honors browserslist config in package.json
-            // which in turn let's users customize the target behavior as per their needs.
-            // postcssNormalize(),
-          ],
+          postcssOptions: {
+            ident: 'postcss',
+            plugins: () => [
+              require('postcss-flexbugs-fixes'),
+              // eslint-disable-next-line @typescript-eslint/no-var-requires
+              require('postcss-preset-env')({
+                autoprefixer: {
+                  flexbox: 'no-2009',
+                },
+                stage: 3,
+              }),
+              // Adds PostCSS Normalize as the reset css with default options,
+              // so that it honors browserslist config in package.json
+              // which in turn let's users customize the target behavior as per their needs.
+              // postcssNormalize(),
+            ],
+          },
+
           sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
         },
       },
     ].filter(Boolean) as any[];
     if (preProcessor) {
       loaders.push(
+        // {
+        //   loader: require.resolve('resolve-url-loader'),
+        //   options: {
+        //     sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+        //     root: paths.appSrc,
+        //   },
+        // },
         {
-          loader: require.resolve('resolve-url-loader'),
-          options: {
-            sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
-            root: paths.appSrc,
-          },
-        },
-        {
-          loader: require.resolve(preProcessor),
+          loader: preProcessor,
           options: {
             sourceMap: true,
           },
@@ -68,74 +71,102 @@ export function getCssRules(ctx: ConfigContextType): RuleSetRule[] {
   };
 
   const modulesOpts = {
-    getLocalIdent: getCSSModuleLocalIdent,
+    mode: 'local',
+    localIdentName: '[path][name]__[local]--[hash:base64:5]',
+    localIdentHashSalt: 'my-custom-hash',
+    namedExport: true,
+    exportLocalsConvention: 'camelCaseOnly',
+    // getLocalIdent: getCSSModuleLocalIdent,
   };
 
   return [
     {
-      test: /\.css$/,
-      use: getStyleLoaders({
-        importLoaders: 1,
-        sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
-      }),
-    },
-    {
-      test: /\.css$/,
-      resourceQuery: 'module',
-      use: getStyleLoaders({
-        importLoaders: 1,
-        sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
-        modules: modulesOpts,
-      }),
-    },
-    {
-      test: /\.less$/,
-      use: getStyleLoaders(
+      oneOf: [
         {
-          importLoaders: 3,
-          sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+          test: /\.css$/,
+          resourceQuery: /modules/,
+          use: getStyleLoaders({
+            importLoaders: 1,
+            sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+            modules: modulesOpts,
+          }),
         },
-        'less-loader'
-      ),
+        {
+          test: /\.css$/,
+          use: getStyleLoaders({
+            importLoaders: 1,
+            sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+          }),
+        },
+      ],
     },
     {
-      test: /\.less$/,
-      resourceQuery: 'module',
-      use: getStyleLoaders(
+      oneOf: [
         {
-          importLoaders: 3,
-          sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
-          modules: modulesOpts,
+          test: /\.less/,
+          resourceQuery: /modules/,
+          use: getStyleLoaders(
+            {
+              importLoaders: 3,
+              sourceMap: isEnvProduction
+                ? shouldUseSourceMap
+                : isEnvDevelopment,
+              modules: modulesOpts,
+            },
+            'less-loader'
+          ),
         },
-        'less-loader'
-      ),
+        {
+          test: /\.less$/,
+          use: getStyleLoaders(
+            {
+              importLoaders: 3,
+              sourceMap: isEnvProduction
+                ? shouldUseSourceMap
+                : isEnvDevelopment,
+            },
+            'less-loader'
+          ),
+        },
+      ],
     },
     {
-      test: /\.s(a|c)ss$/,
-      use: getStyleLoaders(
+      oneOf: [
         {
-          importLoaders: 3,
-          sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+          test: /\.s(a|c)ss$/,
+          resourceQuery: /modules/,
+          use: getStyleLoaders(
+            {
+              importLoaders: 3,
+              sourceMap: isEnvProduction
+                ? shouldUseSourceMap
+                : isEnvDevelopment,
+              modules: modulesOpts,
+            },
+            'sass-loader'
+          ),
         },
-        'sass-loader'
-      ),
-    },
-    {
-      test: /\.s(a|c)ss$/,
-      resourceQuery: 'module',
-      use: getStyleLoaders(
         {
-          importLoaders: 3,
-          sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
-          modules: modulesOpts,
+          test: /\.s(a|c)ss$/,
+          use: getStyleLoaders(
+            {
+              importLoaders: 3,
+              sourceMap: isEnvProduction
+                ? shouldUseSourceMap
+                : isEnvDevelopment,
+            },
+            'sass-loader'
+          ),
         },
-        'sass-loader'
-      ),
+      ],
     },
   ];
 }
 
-// @ts-ignore
-function getCSSModuleLocalIdent(context, localIdentName, localName, options) {
-  return localIdentName;
-}
+// // @ts-ignore
+// function getCSSModuleLocalIdent(context, localIdentName, localName, options) {
+//   console.log(context, localIdentName, localName, options);
+//   process.exit();
+//   //'[local]___[hash:base64:5]'
+//   return localIdentName;
+// }

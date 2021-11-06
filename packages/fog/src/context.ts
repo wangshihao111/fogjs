@@ -1,9 +1,9 @@
-import { ObjectType } from './types/base.type';
+import { ResolvedPaths, resolvePaths } from './utils/paths';
 
 export interface ConfigContextType {
   entry: string;
   env: string;
-  paths: ObjectType;
+  paths: ResolvedPaths;
 }
 
 export function createContext(opts: { env: string }): ConfigContextType {
@@ -11,6 +11,6 @@ export function createContext(opts: { env: string }): ConfigContextType {
   return {
     entry: '',
     env,
-    paths: {},
+    paths: resolvePaths(),
   };
 }
