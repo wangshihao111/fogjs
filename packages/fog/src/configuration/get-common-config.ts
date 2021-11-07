@@ -7,7 +7,6 @@ import { getWebpackPlugins } from './get-webpack-plugins';
 
 const imageInlineSizeLimit = 8096;
 const hasJsxRuntime = true;
-const shouldUseReactRefresh = true;
 
 const getCommonConfiguration = (ctx: ConfigContextType): Configuration => {
   const { env = 'development', paths } = ctx;
@@ -100,9 +99,9 @@ const getCommonConfiguration = (ctx: ConfigContextType): Configuration => {
                     },
                   ],
                   [require.resolve('@umijs/babel-plugin-auto-css-modules')],
-                  isEnvDevelopment &&
-                    shouldUseReactRefresh &&
-                    require.resolve('react-refresh/babel'),
+                  // isEnvDevelopment &&
+                  //   shouldUseReactRefresh &&
+                  //   require.resolve('react-refresh/babel'),
                 ].filter(Boolean),
                 cacheDirectory: true,
                 cacheCompression: false,

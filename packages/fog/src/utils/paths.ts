@@ -7,6 +7,7 @@ export type ResolvedPaths = {
   publicUrlOrPath: string;
   appBuild: string;
   appHtml: string;
+  appPublic: string;
 };
 
 export function resolvePaths(): ResolvedPaths {
@@ -15,6 +16,7 @@ export function resolvePaths(): ResolvedPaths {
     appSrc: resolve(cwd, 'src'),
     publicUrlOrPath: '/',
     appBuild: resolve(cwd, 'dist'),
+    appPublic: resolve(cwd, 'public'),
     appHtml: resolve(cwd, 'public/index.html'),
   };
 }
