@@ -2,10 +2,13 @@ import webpack from 'webpack';
 import rimraf from 'rimraf';
 import { createContext } from '../context';
 import getCommonConfiguration from '../configuration/get-common-config';
+import { resolveEnv } from '../utils/resolveEnv';
 
 export default function build() {
+  const cwd = process.cwd();
+  resolveEnv(cwd);
   process.env.NODE_ENV = 'production';
-  const context = createContext({ env: 'production' });
+  const context = createContext({ env: 'production', cwd });
   const webpackConfig = getCommonConfiguration(context);
   const compiler = webpack(webpackConfig);
   rimraf.sync(context.paths.appBuild);
