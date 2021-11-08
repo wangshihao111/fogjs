@@ -1,3 +1,4 @@
+import { Config } from './types';
 import { ResolvedPaths, resolvePaths } from './utils/paths';
 
 export interface ConfigContextType {
@@ -5,6 +6,7 @@ export interface ConfigContextType {
   env: string;
   paths: ResolvedPaths;
   cwd: string;
+  userConfig?: Config;
 }
 
 export function createContext(opts: {

@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/wangshihao111/fogjs#readme",
   "devDependencies": {
+    "@types/lodash": "^4.14.176",
     "@types/node": "^16.11.6",
     "@types/react": "^17.0.34",
     "@types/react-dom": "^17.0.11",

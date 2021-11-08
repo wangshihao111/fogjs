@@ -2,7 +2,7 @@
   "name": "@fogjs/fog",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,6 +10,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@babel/register": "^7.16.0",
+    "@babel/preset-typescript": "~7.16.0",
     "@svgr/webpack": "^5.5.0",
     "@umijs/babel-plugin-auto-css-modules": "^3.5.20",
     "babel-loader": "^8.2.3",
@@ -21,6 +23,7 @@
     "dotenv-expand": "^5.1.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "lodash": "^4.17.21",
     "mini-css-extract-plugin": "^2.4.4",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-loader": "^6.2.0",
@@ -30,9 +33,9 @@
     "style-loader": "^3.3.1",
     "url-loader": "^4.1.1",
     "webpack": "^5.61.0",
-    "webpackbar": "^5.0.2",
     "webpack-dev-server": "^4.4.0",
-    "webpack-manifest-plugin": "^4.0.2"
+    "webpack-manifest-plugin": "^4.0.2",
+    "webpackbar": "^5.0.2"
   },
   "devDependencies": {
     "@types/mini-css-extract-plugin": "^2.4.0",

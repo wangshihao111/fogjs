@@ -1,5 +1,7 @@
 import { Configuration } from 'webpack';
+import { ObjectType } from './base.type';
 
 export interface Config {
-  configWebpack(config: Configuration): Configuration;
+  define?: ObjectType;
+  configWebpack?(config: Configuration): Configuration;
 }
