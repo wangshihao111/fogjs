@@ -1,9 +1,9 @@
-import path from 'path';
 import { Configuration } from 'webpack';
 import { ConfigContextType } from '../context';
 import { resolveAlias } from '../utils/resolveAlias';
 import { getCssRules } from './get-css-rules';
 import { getWebpackPlugins } from './get-webpack-plugins';
+import { resolveEntry } from './util';
 
 const imageInlineSizeLimit = 8096;
 const hasJsxRuntime = true;
@@ -14,7 +14,7 @@ const getCommonConfiguration = (ctx: ConfigContextType): Configuration => {
   const isEnvDevelopment = env === 'development';
   const shouldUseSourceMap = env === 'development';
   return {
-    entry: [paths.appEntry],
+    entry: resolveEntry(paths.appEntry, ctx),
     mode: env === 'production' ? 'production' : 'development',
     resolve: {
       extensions: ['.js', '.ts', '.tsx', 'jsx', '.json'],

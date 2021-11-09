@@ -20,7 +20,7 @@ export function resolveEnv(cwd: string) {
   });
 }
 
-export function resolveClientEnv() {
+export function resolveClientEnv(userDefine?: ObjectType<string>) {
   const clientRegexp = /^FOG_/;
   const result: ObjectType<string> = {};
   const commonEnvList = ['NODE_ENV'];
@@ -30,6 +30,12 @@ export function resolveClientEnv() {
       result[`process.env.${key}`] = JSON.stringify(value);
     }
   });
+
+  if (userDefine) {
+    Object.entries(userDefine).forEach(
+      ([k, v]) => (result[k] = JSON.stringify(v))
+    );
+  }
 
   return result;
 }

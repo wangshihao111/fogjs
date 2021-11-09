@@ -44,6 +44,6 @@ export function getWebpackPlugins(
       }),
     isEnvProduction &&
       new WebpackManifestPlugin({ fileName: 'asset-manifest.json' }),
-    new DefinePlugin(resolveClientEnv()),
+    new DefinePlugin(resolveClientEnv(ctx.userConfig?.define)),
   ].filter(Boolean);
 }
