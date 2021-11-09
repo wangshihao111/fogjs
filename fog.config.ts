@@ -1,4 +1,4 @@
-import { Config } from '@fogjs/fog/lib/types';
+import { Config } from '@fogjs/fog';
 
 export default {
   // polyfill: true,
