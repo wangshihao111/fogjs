@@ -17,6 +17,7 @@
     "babel-loader": "^8.2.3",
     "babel-plugin-named-asset-import": "^0.3.7",
     "babel-preset-react-app": "^10.0.0",
+    "commander": "8.3.0",
     "case-sensitive-paths-webpack-plugin": "^2.4.0",
     "css-loader": "^6.5.1",
     "dotenv": "^10.0.0",
@@ -38,6 +39,7 @@
     "webpackbar": "^5.0.2"
   },
   "devDependencies": {
+    "@types/commander": "2.12.2",
     "@types/mini-css-extract-plugin": "^2.4.0",
     "@types/rimraf": "^3.0.2",
     "@types/webpack": "^5.28.0",
