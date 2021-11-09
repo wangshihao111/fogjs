@@ -12,13 +12,12 @@ export function loadConfig(): Config {
     key: 'config-file',
     value: [configFile],
   });
-  register.register();
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   let config: any = {};
   try {
     config = require(configFile);
   } catch (error: any) {
-    console.warn('Read configuration failed.', error?.message);
+    console.warn('Read configuration failed.', error);
   }
   return config.default || config;
 }

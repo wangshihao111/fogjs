@@ -8,7 +8,7 @@ export function findFileWithExt(
     try {
       const file = `${filename}${ext}`;
       accessSync(file);
-      return { file, ext };
+      return { file: winPath(file), ext };
     } catch (error) {
       continue;
     }

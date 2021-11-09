@@ -21,12 +21,12 @@ export default class BabelRegister {
     );
     register({
       presets: [
-        // [
-        //   require.resolve('@babel/preset-env'),
-        //   {
-        //     modules: 'commonjs',
-        //   },
-        // ],
+        [
+          require.resolve('@babel/preset-env'),
+          {
+            modules: 'commonjs',
+          },
+        ],
         require.resolve('@babel/preset-typescript'),
       ],
       ignore: [/node_modules/],
