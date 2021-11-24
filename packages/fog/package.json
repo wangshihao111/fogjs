@@ -37,7 +37,8 @@
     "webpack": "^5.61.0",
     "webpack-dev-server": "^4.4.0",
     "webpack-manifest-plugin": "^4.0.2",
-    "webpackbar": "^5.0.2"
+    "webpackbar": "^5.0.2",
+    "yargs": "^17.2.1"
   },
   "devDependencies": {
     "@types/commander": "2.12.2",

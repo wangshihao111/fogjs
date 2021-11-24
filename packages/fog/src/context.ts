@@ -1,12 +1,15 @@
-import { Config } from './types';
+import { Configuration } from 'webpack';
+import { Config, ObjectType } from './types';
 import { ResolvedPaths, resolvePaths } from './utils/paths';
 
 export interface ConfigContextType {
+  args?: ObjectType;
   entry: string;
   env: string;
   paths: ResolvedPaths;
   cwd: string;
   userConfig?: Config;
+  getWebpackConfig(): Configuration;
 }
 
 export function createContext(opts: {
@@ -19,5 +22,6 @@ export function createContext(opts: {
     env,
     paths: resolvePaths(),
     cwd: cwd || process.cwd(),
+    getWebpackConfig: () => ({} as any),
   };
 }

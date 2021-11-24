@@ -1,10 +1,11 @@
 import path from 'path';
-import { Config } from '../types/config.type';
+import Application from '../Application';
+import { Config, ConfigHookKeys, ConfigHooks } from '../types/config.type';
 import BabelRegister from './BabelRegister';
 import { findFileWithExt } from './util';
 const cwd = process.cwd();
 
-export function loadConfig(): Config {
+export function loadConfig(store: Application): Config {
   const configFileName = path.resolve(cwd, 'fog.config');
   const { file: configFile } = findFileWithExt(configFileName) || ({} as any);
   const register = new BabelRegister();
@@ -12,12 +13,26 @@ export function loadConfig(): Config {
     key: 'config-file',
     value: [configFile],
   });
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  let config: any = {};
+
+  let config: Config = {};
   try {
-    config = require(configFile);
+    const configContent = require(configFile);
+    config = configContent.default || configContent;
   } catch (error: any) {
     console.warn('Read configuration failed.', error);
   }
-  return config.default || config;
+  store.commands = {
+    ...store.commands,
+    ...(config.commands || {}),
+  };
+  if (config.hooks) {
+    assignHooks(store, config.hooks);
+  }
+  return config;
+}
+
+function assignHooks(store: Application, hooks: ConfigHooks) {
+  Object.entries(hooks).forEach(([hook, hookFn]) => {
+    store.hooks[hook as ConfigHookKeys].push(hookFn);
+  });
 }

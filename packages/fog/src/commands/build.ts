@@ -1,19 +1,16 @@
 import webpack from 'webpack';
 import rimraf from 'rimraf';
-import { createContext } from '../context';
+import { ConfigContextType } from '../context';
 import { resolveEnv } from '../utils/resolveEnv';
-import { loadConfig } from '../utils/loadConfig';
-import { getConfig } from '../configuration/get-config';
 
-export default function build() {
+export default function build(ctx: ConfigContextType) {
   const cwd = process.cwd();
   resolveEnv(cwd);
   process.env.NODE_ENV = 'production';
-  const context = createContext({ env: 'production', cwd });
-  context.userConfig = loadConfig();
-  const webpackConfig = getConfig(context);
+  ctx.env = 'production';
+  const webpackConfig = ctx.getWebpackConfig();
   const compiler = webpack(webpackConfig);
-  rimraf.sync(context.paths.appBuild);
+  rimraf.sync(ctx.paths.appBuild);
   compiler.run((err, stats) => {
     if (err) {
       throw err;

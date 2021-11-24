@@ -1,18 +1,18 @@
 import { program } from 'commander';
-import { start, build } from './commands';
+import Application from './Application';
 
 program
   .command('start')
   .description('Start development server')
   .action(() => {
-    start();
+    new Application().init().runCommand('start', {});
   });
 
 program
   .command('build')
   .description('Build the production dist')
   .action(() => {
-    build();
+    new Application().init().runCommand('build', {});
   });
 
 program.parse(process.argv);

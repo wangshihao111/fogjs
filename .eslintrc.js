@@ -24,6 +24,7 @@ module.exports = {
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
     '@typescript-eslint/ban-ts-comment': 1,
+    '@typescript-eslint/no-var-requires': 0,
   },
   settings: {
     react: {
