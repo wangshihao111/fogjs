@@ -37,6 +37,9 @@ export default class Application extends EventEmitter {
   async runCommand(name: string, args: ObjectType) {
     this.context.args = args;
     const fn = this.commands[name];
+    if (!fn) {
+      throw new Error(`Command: ${name} does not exist.`);
+    }
     for (const hook of this.hooks.onCommand) {
       await hook(name, this.context);
     }

@@ -10,6 +10,7 @@
   "scripts": {
     "prepare": "husky install",
     "start": "node ./packages/fog/bin/cli.js start",
+    "dev": "node ./packages/fog/bin/cli.js",
     "build": "node ./packages/fog/bin/cli.js build",
     "lint-staged": "lint-staged",
     "test": "echo \"Error: no test specified\" && exit 1"
