@@ -21,13 +21,7 @@ export function loadConfig(store: Application): Config {
   } catch (error: any) {
     console.warn('Read configuration failed.', error);
   }
-  store.commands = {
-    ...store.commands,
-    ...(config.commands || {}),
-  };
-  if (config.hooks) {
-    assignHooks(store, config.hooks);
-  }
+  applyConfig(store, config);
   return config;
 }
 
@@ -35,4 +29,20 @@ function assignHooks(store: Application, hooks: ConfigHooks) {
   Object.entries(hooks).forEach(([hook, hookFn]) => {
     store.hooks[hook as ConfigHookKeys].push(hookFn);
   });
+}
+
+function applyConfig(store: Application, config: Config) {
+  if (config.extends?.length) {
+    config.extends.forEach((c) => applyConfig(store, c));
+  }
+  store.commands = {
+    ...store.commands,
+    ...(config.commands || {}),
+  };
+  if (config.configWebpack) {
+    store.configureWebpackList.push(config.configWebpack);
+  }
+  if (config.hooks) {
+    assignHooks(store, config.hooks);
+  }
 }
