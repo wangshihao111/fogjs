@@ -5,3 +5,4 @@ export * from './resolveAlias';
 export * from './resolveEnv';
 export * from './util';
 export * from './constants';
+export * from './logger';

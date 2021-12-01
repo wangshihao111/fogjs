@@ -4,7 +4,7 @@ import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import { getServerConfig } from './getServevrConfig';
 import { resolveEnv } from '../../utils/resolveEnv';
-import { autoCache } from './auto-cache';
+import { autoCache } from '../build-cache';
 
 export default async function start(context: ConfigContextType) {
   const cwd = process.cwd();

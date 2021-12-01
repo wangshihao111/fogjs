@@ -1,4 +1,5 @@
 import { program } from 'commander';
+import { logger } from './utils';
 import yargs from 'yargs';
 import Application from './Application';
 
@@ -26,8 +27,8 @@ program
     try {
       await new Application().init().runCommand(command, args);
     } catch (error) {
-      console.error((<any>error)?.message);
-      process.exit();
+      logger.error((<any>error)?.message);
+      process.exit(1);
     }
   });
 

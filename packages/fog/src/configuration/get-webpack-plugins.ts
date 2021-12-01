@@ -12,7 +12,6 @@ export function getWebpackPlugins(
   ctx: ConfigContextType
 ): WebpackPluginInstance[] {
   const { env, paths } = ctx;
-  console.log(1);
   const isEnvDevelopment = env === 'development';
   const isEnvProduction = env === 'production';
   return [
