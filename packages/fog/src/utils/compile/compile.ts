@@ -5,11 +5,13 @@ export default async function compile(
   config: Configuration,
   opts: { outputPath: string }
 ) {
+  const oldEnv = process.env.NODE_ENV;
   process.env.NODE_ENV = 'production';
   const compiler = webpack(config);
   rimraf.sync(opts.outputPath);
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
+      process.env.NODE_ENV = oldEnv;
       if (err) {
         reject(err);
       }

@@ -44,6 +44,7 @@ export type ConfigHooks = Record<ConfigHookKeys, HookFn>;
 export type MfConfigType =
   | {
       mode: 'auto';
+      env?: 'development' | 'production';
       cacheDirectory?: string;
       servePort?: number;
       caches: Array<{

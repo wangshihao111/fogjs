@@ -37,12 +37,13 @@ export async function autoCache(ctx: ConfigContextType) {
     const cached: string[] = [];
     // 构建cache
     for (const dep of caches) {
-      const webpackConfig = getNormalConfig(ctx);
       const outputPath = resolve(cacheDirectory, dep.name);
       if (!depHasCached(outputPath)) {
+        const webpackConfig = getNormalConfig(ctx);
         Object.assign<Configuration, Configuration>(webpackConfig, {
           entry: resolve(__dirname, './cache-entry'),
           output: { path: outputPath, publicPath: 'auto' },
+          cache: false,
         });
         applyMfConfig(
           webpackConfig,

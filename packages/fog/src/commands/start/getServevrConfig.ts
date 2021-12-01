@@ -16,7 +16,7 @@ export function getServerConfig(ctx: ConfigContextType): Configuration {
     port: 3000,
     client: {
       logging: 'error',
-      overlay: { errors: true },
+      overlay: { errors: true, warnings: false },
       progress: true,
     },
     historyApiFallback: {
