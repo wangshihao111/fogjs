@@ -1,6 +1,9 @@
 'use strict';
 import { Configuration } from 'webpack-dev-server';
+import { static as serveStatic } from 'express';
 import { ConfigContextType } from '../../context';
+import path from 'path';
+import { defaultCacheServePath } from '../../utils';
 
 const host = process.env.HOST || '0.0.0.0';
 
@@ -19,6 +22,12 @@ export function getServerConfig(ctx: ConfigContextType): Configuration {
     historyApiFallback: {
       disableDotRule: true,
       index: paths.publicUrlOrPath,
+    },
+    onBeforeSetupMiddleware(server) {
+      server.app.use(
+        defaultCacheServePath,
+        serveStatic(path.resolve(ctx.cwd, 'cache'))
+      );
     },
   };
 }

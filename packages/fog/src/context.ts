@@ -12,6 +12,7 @@ export interface ConfigContextType {
   userConfig?: Config;
   app: Application;
   getWebpackConfig(): Configuration;
+  state: ObjectType;
 }
 
 export function createContext(opts: {
@@ -24,6 +25,7 @@ export function createContext(opts: {
     env,
     paths: resolvePaths(),
     cwd: cwd || process.cwd(),
+    state: {},
     getWebpackConfig: () => ({} as any),
   } as any;
 }

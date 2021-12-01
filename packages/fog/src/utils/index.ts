@@ -4,3 +4,4 @@ export * from './paths';
 export * from './resolveAlias';
 export * from './resolveEnv';
 export * from './util';
+export * from './constants';

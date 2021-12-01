@@ -111,11 +111,7 @@ const getCommonConfiguration = (ctx: ConfigContextType): Configuration => {
             ...getCssRules(ctx),
             {
               loader: require.resolve('file-loader'),
-              exclude: [
-                /\.(js|mjs|jsx|ts|tsx|css|less|scss|sass)$/,
-                /\.html$/,
-                /\.json$/,
-              ],
+              exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               options: {
                 name: 'static/media/[name].[hash:8].[ext]',
               },

@@ -23,7 +23,6 @@ program
   .description('Run custom commands')
   .allowUnknownOption()
   .action(async (command: string) => {
-    console.log();
     try {
       await new Application().init().runCommand(command, args);
     } catch (error) {

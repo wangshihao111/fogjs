@@ -24,9 +24,9 @@ export default class Application extends EventEmitter {
     this.context = createContext({
       env: process.env.NODE_ENV || 'development',
     });
+    this.context.userConfig = config;
     this.context.app = this;
     this.context.getWebpackConfig = () => getConfig(this.context);
-    this.context.userConfig = config;
     this.init();
   }
 
