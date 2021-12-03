@@ -53,6 +53,13 @@ const getCommonConfiguration = (ctx: ConfigContextType): Configuration => {
     module: {
       rules: [
         {
+          test: /\.vue$/,
+          loader: 'vue-loader',
+          options: {
+            // compiler: require('@vue/compiler-sfc'),
+          },
+        },
+        {
           oneOf: [
             {
               test: [/\.avif$/],
@@ -69,6 +76,42 @@ const getCommonConfiguration = (ctx: ConfigContextType): Configuration => {
               options: {
                 limit: imageInlineSizeLimit,
                 name: 'static/media/[name].[hash:8].[ext]',
+              },
+            },
+            {
+              test: /\.(js|mjs|jsx|ts|tsx)$/,
+              resourceQuery: /vue/,
+              include: paths.appSrc,
+              loader: require.resolve('babel-loader'),
+              options: {
+                babelrc: true,
+                presets: [
+                  [
+                    require.resolve('babel-preset-react-app'),
+                    {
+                      runtime: hasJsxRuntime ? 'automatic' : 'classic',
+                    },
+                  ],
+                ],
+
+                plugins: [
+                  '@vue/babel-plugin-jsx',
+                  [
+                    require.resolve('babel-plugin-named-asset-import'),
+                    {
+                      loaderMap: {
+                        svg: {
+                          ReactComponent:
+                            '@svgr/webpack?-svgo,+titleProp,+ref![path]',
+                        },
+                      },
+                    },
+                  ],
+                  [require.resolve('@umijs/babel-plugin-auto-css-modules')],
+                ].filter(Boolean),
+                cacheDirectory: true,
+                cacheCompression: false,
+                compact: isEnvProduction,
               },
             },
             {

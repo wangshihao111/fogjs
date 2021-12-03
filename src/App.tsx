@@ -3,7 +3,7 @@ import * as styles from './App.css';
 
 console.log(typeof process.env.FOG_NAME, process.env.NODE_ENV);
 
-const App: FC = () => {
+const App: FC<any> = () => {
   return <div className={styles.container}>test app</div>;
 };
 
