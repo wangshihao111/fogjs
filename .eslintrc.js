@@ -25,6 +25,7 @@ module.exports = {
     semi: ['error', 'always'],
     '@typescript-eslint/ban-ts-comment': 1,
     '@typescript-eslint/no-var-requires': 0,
+    '@typescript-eslint/triple-slash-reference': 0,
   },
   settings: {
     react: {
