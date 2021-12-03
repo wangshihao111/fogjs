@@ -8,6 +8,9 @@ const cwd = process.cwd();
 export function loadConfig(store: Application): Config {
   const configFileName = path.resolve(cwd, 'fog.config');
   const { file: configFile } = findFileWithExt(configFileName) || ({} as any);
+  if (!configFile) {
+    return {};
+  }
   const register = new BabelRegister();
   register.setOnlyMap({
     key: 'config-file',
