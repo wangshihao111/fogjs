@@ -108,6 +108,7 @@ const getCommonConfiguration = (ctx: ConfigContextType): Configuration => {
                     },
                   ],
                   [require.resolve('@umijs/babel-plugin-auto-css-modules')],
+                  isEnvDevelopment && require.resolve('react-refresh/babel'),
                 ].filter(Boolean),
                 cacheDirectory: true,
                 cacheCompression: false,
@@ -142,9 +143,6 @@ const getCommonConfiguration = (ctx: ConfigContextType): Configuration => {
                     },
                   ],
                   [require.resolve('@umijs/babel-plugin-auto-css-modules')],
-                  // isEnvDevelopment &&
-                  //   shouldUseReactRefresh &&
-                  //   require.resolve('react-refresh/babel'),
                 ].filter(Boolean),
                 cacheDirectory: true,
                 cacheCompression: false,
