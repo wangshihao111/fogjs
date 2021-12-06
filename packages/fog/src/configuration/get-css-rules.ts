@@ -15,11 +15,6 @@ export function getCssRules(ctx: ConfigContextType): RuleSetRule[] {
       isEnvDevelopment && require.resolve('style-loader'),
       isEnvProduction && {
         loader: MiniCssExtractPlugin.loader,
-        // css is located in `static/css`, use '../../' to locate index.html folder
-        // in production `paths.publicUrlOrPath` can be a relative path
-        // options: paths.publicUrlOrPath.startsWith('.')
-        //   ? { publicPath: '../../' }
-        //   : {},
       },
       {
         loader: require.resolve('css-loader'),
@@ -51,21 +46,12 @@ export function getCssRules(ctx: ConfigContextType): RuleSetRule[] {
       },
     ].filter(Boolean) as any[];
     if (preProcessor) {
-      loaders.push(
-        // {
-        //   loader: require.resolve('resolve-url-loader'),
-        //   options: {
-        //     sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
-        //     root: paths.appSrc,
-        //   },
-        // },
-        {
-          loader: preProcessor,
-          options: {
-            sourceMap: true,
-          },
-        }
-      );
+      loaders.push({
+        loader: preProcessor,
+        options: {
+          sourceMap: true,
+        },
+      });
     }
     return loaders;
   };

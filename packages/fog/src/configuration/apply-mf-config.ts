@@ -39,13 +39,14 @@ export function applyMfConfig(
     shared = mfConfig.shared;
     exposes = mfConfig.exposes;
   } else if (mfConfig.mode === 'auto') {
+    const { caches = [] } = mfConfig;
     // 自动模式下，需要将资源地址加在入口配制处
     const tmpPath = generateResourceFile(
-      mfConfig.caches.map((c) => c.name),
+      caches.map((c) => c.name),
       defaultCacheServePath
     );
     (webpackConfig.entry as string[]).unshift(tmpPath);
-    remotes = mfConfig.caches
+    remotes = caches
       .map(({ name }) => ({
         [name]: `${getDepsKey(name)}@[window.${getDepsKey(
           name

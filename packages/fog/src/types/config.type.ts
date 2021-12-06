@@ -47,7 +47,7 @@ export type MfConfigType =
       env?: 'development' | 'production';
       cacheDirectory?: string;
       servePort?: number;
-      caches: Array<{
+      caches?: Array<{
         name: string;
         files?: string[];
       }>;

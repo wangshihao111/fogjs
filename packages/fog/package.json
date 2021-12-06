@@ -14,7 +14,6 @@
     "@babel/preset-typescript": "~7.16.0",
     "@svgr/webpack": "^5.5.0",
     "@umijs/babel-plugin-auto-css-modules": "^3.5.20",
-    "@vue/babel-plugin-jsx": "^1.1.1",
     "babel-loader": "^8.2.3",
     "babel-plugin-named-asset-import": "^0.3.7",
     "babel-preset-react-app": "^10.0.0",

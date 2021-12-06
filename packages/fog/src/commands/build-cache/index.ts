@@ -36,7 +36,7 @@ export async function autoCache(
   ) {
     const defaultCacheDirectory = resolve(ctx.cwd, 'cache');
     const {
-      mfConfig: { caches, cacheDirectory = defaultCacheDirectory },
+      mfConfig: { caches = [], cacheDirectory = defaultCacheDirectory },
     } = ctx.userConfig;
     const buildOnePkg = async (dep: any, outputPath: string) => {
       const webpackConfig = getNormalConfig(ctx);
